@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>森森天氣</title>
+    <title>台南天氣查詢中心</title>
     <link rel="icon" type="image/png" href="./icon-v2.png">
     <link rel="apple-touch-icon" href="./icon-v2.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./icon-v2.png">
@@ -14,7 +14,8 @@
         rel="stylesheet">
 
     <style>
-        :root {
+        /* 預設主題 - 森林系 */
+        .theme-default {
             --ac-green: #7DE1A9;
             --ac-bg-pattern: #8FD8AF;
             --ac-cream: #FFFEF2;
@@ -24,6 +25,90 @@
             --ac-dark: #58504A;
             --ac-card-border: #E6E0C8;
         }
+
+        /* 鬼滅之刃風 - 炭治郎綠 
+        🔥 特色感受：
+            炭治郎羽織的綠黑市松格
+            帶著武士感的深色木質系
+            感覺天氣一看就想拔刀呼吸一下 */
+        .theme-kimetsu {
+            --ac-green: #1DBE75;
+            --ac-bg-pattern: #0F7A4D;
+            --ac-cream: #F3F1E7;
+            --ac-yellow: #C4A962;
+            --ac-brown: #181818;
+            --ac-blue: #3A8EA5;
+            --ac-dark: #111;
+            --ac-card-border: #0D0D0D;
+
+            background-image:
+                repeating-linear-gradient(45deg, #0F7A4D 0px, #0F7A4D 20px, #1DBE75 20px, #1DBE75 40px) !important;
+        }
+
+
+        /* 賽博龐克風 - 霓虹紫 
+        ⚡ 特色感受：
+        夜城 2077 的霓虹視覺
+        粉紫 × 電藍 × 深黑
+        超前衛、科技感爆棚
+        */
+        .theme-cyberpunk {
+            --ac-green: #1D003D;
+            --ac-bg-pattern: #25004F;
+            --ac-cream: #1A1A1A;
+            --ac-yellow: #FF00E6;
+            --ac-brown: #00E5FF;
+            --ac-blue: #00D0FF;
+            --ac-dark: #EAEAEA;
+            --ac-card-border: #6B00FF;
+
+            background-image:
+                radial-gradient(circle at top left, #5D00FF, #1D003D),
+                radial-gradient(circle at bottom right, #FF00C8, #1D003D) !important;
+        }
+
+
+        /* 極簡黑白風 
+        🧊 特色感受：
+            取消所有斜紋、取消飽和色
+            大量留白、乾淨簡約
+            Apple / Muji 風格的天氣 UI
+        */
+        .theme-minimal {
+            --ac-green: #FFFFFF;
+            --ac-bg-pattern: transparent;
+            --ac-cream: #F6F6F6;
+            --ac-yellow: #E0E0E0;
+            --ac-brown: #000000;
+            --ac-blue: #000000;
+            --ac-dark: #111111;
+            --ac-card-border: #DADADA;
+
+            background-color: #FFFFFF !important;
+            background-image: none !important;
+        }       
+
+        /* 麥當勞風 - Red & Yellow 
+        
+        🍟 特色感受：
+            大膽亮黃 + 麥當勞紅
+            活潑、醒目、速食氛圍
+            很適合做可愛 + 商用的天氣 UI
+        */
+        .theme-mcdonald {
+            --ac-green: #FFD100; /* 主背景黃色 */
+            --ac-bg-pattern: #FFB800;
+            --ac-cream: #FFFFFF;
+            --ac-yellow: #FFDD00;
+            --ac-brown: #C1121F; /* 麥當勞紅 */
+            --ac-blue: #FF0000;
+            --ac-dark: #870000;
+            --ac-card-border: #FFFFFF;
+
+            background-image:
+                repeating-linear-gradient(45deg, #FFD100 0px, #FFD100 20px, #FFB800 20px, #FFB800 40px) !important;
+        }
+
 
         * {
             margin: 0;
@@ -255,16 +340,25 @@
             align-items: center;
             z-index: 999;
         }
+
+
+        
     </style>
 </head>
 
-<body>
+<body class="theme-kimetsu">
     <div id="loading" class="loading-screen">
         <div style="font-size: 4rem; animation: bounce 2s infinite;">☁️</div>
         <p style="color: white; font-weight: bold; margin-top: 20px;">正在觀測雲的流動...</p>
     </div>
+    
+    <button onclick="setTheme('theme-default')">森林系</button>
+    <button onclick="setTheme('theme-kimetsu')">鬼滅</button>
+<button onclick="setTheme('theme-cyberpunk')">賽博</button>
+<button onclick="setTheme('theme-minimal')">黑白</button>
+<button onclick="setTheme('theme-mcdonald')">麥當勞</button>
     <div class="status-bar">
-        <div class="location-pill">📍 高雄</div>
+        <div class="location-pill">📍 台南</div>
         <div id="updateTime" class="update-pill">更新中...</div>
     </div>
 
@@ -278,7 +372,11 @@
         </div>
 
     </div>
-
+<script>
+function setTheme(theme) {
+    document.body.className = theme;
+}
+</script>
     <script>
         const API_URL = "https://cwa-backend-api.zeabur.app/api/weather/kaohsiung";
 
